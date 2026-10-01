@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot name="anomaly_wheel">
+
+  <!-- Materiali -->
+  <material name="robot_gray">
+    <color rgba="0.4 0.4 0.4 1" />
+  </material>
+  <material name="robot_blue">
+    <color rgba="0.1 0.3 0.8 1" />
+  </material>
+  <material name="robot_white">
+    <color rgba="1.0 1.0 1.0 1" />
+  </material>
+  <material name="robot_green">
+    <color rgba="0.0 0.8 0.2 1" />
+  </material>
+  <material name="robot_steel">
+    <color rgba="0.7 0.7 0.7 1" />
+  </material>
+
+  <!-- Telaio / Base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2" />
+      </geometry>
+      <material name="robot_gray" />
+    </visual>
+  </link>
+
+  <!-- Albero Motore -->
+  <link name="shaft_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.02" length="0.3" />
+      </geometry>
+      <material name="robot_steel" />
+    </visual>
+  </link>
+
+  <!-- Ruota Principale -->
+  <link name="wheel_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.3" length="0.1" />
+      </geometry>
+      <material name="robot_blue" />
+    </visual>
+  </link>
+
+  <!-- Marker Visivo sulla ruota per vedere la rotazione -->
+  <link name="marker_link">
+    <visual>
+      <geometry>
+        <box size="0.1 0.05 0.05" />
+      </geometry>
+      <material name="robot_white" />
+    </visual>
+  </link>
+
+  <!-- Nicla Vision (Sostituisce i vecchi sensori separati) -->
+  <link name="nicla_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.02" />
+      </geometry>
+      <material name="robot_green" />
+    </visual>
+  </link>
+
+  <!-- Giunto Motore (Continuo) -->
+  <joint name="wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="wheel_link" />
+    <origin xyz="0 0.3 0" rpy="1.5708 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Fissaggi Rigidi -->
+  <joint name="shaft_joint" type="fixed">
+    <parent link="wheel_link" />
+    <child link="shaft_link" />
+    <origin xyz="0 0 0.15" rpy="0 0 0" />
+  </joint>
+
+  <joint name="marker_joint" type="fixed">
+    <parent link="wheel_link" />
+    <child link="marker_link" />
+    <origin xyz="0.2 0 0.07" rpy="0 0 0" />
+  </joint>
+
+  <!-- Posizionamento della Nicla Vision sul telaio -->
+  <joint name="nicla_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="nicla_link" />
+    <origin xyz="0 0 0.11" />
+  </joint>
+
+</robot>

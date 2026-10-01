@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+
+  simulation:
+    build: .
+    image: anomaly_wheel_env:latest
+    container_name: anomaly_wheel_container
+    environment:
+      - ROS_DOMAIN_ID=0
+      - CYCLONEDDS_URI=file:///root/ros2_ws/cyclonedds.xml
+      - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      - PULSE_SERVER=${PULSE_SERVER}
+      - QT_X11_NO_MITSHM=1
+
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /mnt/wslg:/mnt/wslg:ro
+      - ./src:/root/ros2_ws/src
+      - ./cyclonedds.xml:/root/ros2_ws/cyclonedds.xml:ro
+
+      - /dev:/dev
+    privileged: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu, graphics, compute, utility ]
