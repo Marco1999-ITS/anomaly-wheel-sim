@@ -1,6 +1,6 @@
 # Anomaly Wheel Sim
 
-Questo progetto dimostra l'integrazione tra l'inferenza AI on-edge e l'ecosistema ROS 2. Analizzando i dati di accelerometro e giroscopio direttamente sull'hardware, il sistema rileva le anomalie vibrazionali e sincronizza i risultati con un Digital Twin, offrendo un'applicazione pratica di Condition Monitoring industriale.
+Questo progetto dimostra l'integrazione tra l'inferenza AI on-edge e l'ecosistema ROS 2. Analizzando i dati di accelerometro e giroscopio direttamente sull'hardware, il sistema rileva le anomalie vibrazionali e sincronizza i risultati con una simulazione, offrendo un'applicazione pratica di Condition Monitoring. 
 
 ## Il Flusso di Funzionamento
 1. Una scheda fisica (Arduino Nicla Vision) campiona l'accelerometro e il giroscopio a 100Hz ed elabora i dati localmente tramite una rete neurale (Edge Impulse).
@@ -12,8 +12,8 @@ Per garantire la massima riproducibilità, l'infrastruttura è interamente conta
 ## Struttura del Repository
 * **`nicla_code/`**: Firmware C++ (`.ino`) da caricare sulla scheda Nicla Vision. Gestisce l'acquisizione IMU e l'inferenza AI.
 * **`src/`**: Pacchetto ROS 2 (`anomaly_wheel_sim`) contenente:
-  * Nodi Python (`serial_bridge.py` per l'acquisizione USB, `sim_controller.py` per la logica HIL).
+  * Nodi Python (`serial_bridge.py` per l'acquisizione USB, `sim_controller.py` per la logica di supervisione e aggiornamento cinematica).
   * Il modello cinematico URDF del macchinario (`wheel.urdf`).
   * Le configurazioni di visualizzazione RViz2 (`wheel_view.rviz`).
-* **Infrastruttura **: `Dockerfile` (ROS 2 Jazzy) e `docker-compose.yml`, preconfigurati per il passthrough grafico (X11/WSLg) e la comunicazione CycloneDDS.
+* **Infrastruttura**: `Dockerfile` (ROS 2 Jazzy) e `docker-compose.yml`, preconfigurati per il passthrough grafico (X11/WSLg) e la comunicazione CycloneDDS.
 
